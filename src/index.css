@@ -7,3 +7,29 @@ body {
     background-color: #f8f9fa;
     color: #343a40;
 }
+a.navlink{
+    position: relative;
+
+}
+a.navlink::after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    border-radius: 100%;
+    background-color: #343a40;
+    width: 0;
+    left: 50%;
+    transform: translate(-50%);
+    bottom:10%;
+    transition: width 0.3s ease;
+}
+a.navlink.active::after{
+    /* background-color: rgba(75, 85, 99, .25); */
+    width: 78%;
+}
+
+a.navlink:hover::after{
+    width: 78%;
+    color: #343a40;
+    /* background-color: rgba(75, 85, 99, .25); */
+}

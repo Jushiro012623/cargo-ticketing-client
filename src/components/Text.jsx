@@ -9,7 +9,8 @@ const variants = {
   note: "text-sm tracking-wide italic",
   danger: "text-red-500",
   success: "text-teal-500",
-  text:'text-lg'
+  text:'text-lg',
+  lg: 'text-5xl'
 };
 export default function Text({ variant = 'default', className, ...props }) {
   return <h1 className={clsx(variants[variant], className)} {...props} />;

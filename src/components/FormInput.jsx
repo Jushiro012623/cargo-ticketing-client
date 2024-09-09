@@ -1,12 +1,15 @@
 import React from "react";
-import { Label, Input } from "./components";
-export default function FormInput ({onFocus, id, name, label, variant = 'primary', ...props }){
+import { Label, Input, Text } from "./components";
+import { useForm } from "react-hook-form";
+export default function FormInput ({error, onFocus, id, name, label, variant = 'primary', ...props }){
+
     return (
       <div className="flex flex-col ">
         <Label reference={id} variant={variant}>
           {label}
         </Label>
         <Input name={name} id={id} {...props} variant={variant}/>
+        <Text variant={variant} className={`text-sm `}>{error}</Text>
       </div>
     );
   };

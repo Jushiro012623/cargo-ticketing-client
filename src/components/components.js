@@ -6,4 +6,5 @@ import Checkbox from "./Checkbox";
 import Container from "./Container";
 import Logo from "./Logo";
 import FormInput from "./FormInput";
-export { Button, Input, Label, Text, Checkbox,Container,Logo,FormInput};
+import Loader from "./Loader";
+export { Button, Input, Label, Text, Checkbox,Container,Logo,FormInput,Loader};
