@@ -91,9 +91,9 @@ const Form = () => {
   ];
   return (
     <form onSubmit={createUser} className="flex flex-col gap-6">
-      {formInputs.map((input) => (
+      {formInputs.map((input, index) => (
         <FormInput
-          key={input.name}
+          key={index}
           name={input.name}
           label={input.label}
           type={input.type}

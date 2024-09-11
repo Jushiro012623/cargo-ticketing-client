@@ -1,4 +1,4 @@
-import NavBar from "./NavBar";
-import NavLinks from "./NavLinks";
+import FirstStep from "./FirstStep"
+import SecondStep from "./SecondStep"
 
-export { NavBar, NavLinks }
+export {FirstStep, SecondStep}

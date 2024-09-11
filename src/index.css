@@ -1,35 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #d4d4d4;
     color: #343a40;
 }
-a.navlink{
-    position: relative;
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
+.step-item:not(:first-child):after{
+    @apply content-[''] bg-gray-400 absolute w-full h-1 right-2/4 top-1/3 -translate-y-2/4
 }
-a.navlink::after{
-    content: "";
-    position: absolute;
-    height: 2px;
-    border-radius: 100%;
-    background-color: #343a40;
-    width: 0;
-    left: 50%;
-    transform: translate(-50%);
-    bottom:10%;
-    transition: width 0.3s ease;
+.step {
+    @apply w-10 h-10 flex items-center justify-center z-10 relative bg-gray-400 rounded-full
+} 
+.active .step{
+    @apply bg-sky-600
 }
-a.navlink.active::after{
-    /* background-color: rgba(75, 85, 99, .25); */
-    width: 78%;
+.active .step-desc{
+    @apply text-sky-600
 }
 
-a.navlink:hover::after{
-    width: 78%;
-    color: #343a40;
-    /* background-color: rgba(75, 85, 99, .25); */
+.complete .step{
+    @apply bg-teal-500
+}
+.complete .step-desc{
+    @apply text-teal-500
+}
+.complete:not(:first-child):after, 
+.active:not(:first-child):after{
+    @apply bg-teal-500
 }

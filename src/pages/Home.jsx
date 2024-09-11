@@ -1,63 +1,74 @@
-import React, { useEffect } from "react";
-import { NavBar } from "../layouts/layouts";
-import { Container, Button, Loader } from "../components/components";
-import i from "../assets/images/i.jpg";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import useCheckAuth from "../hooks/CheckAuth";
+import React, { useEffect, useState } from "react";
+import Navigation from "../layouts/Navigation";
+import { Container, Text, Button } from "../components/components";
+import { FirstStep, SecondStep } from "../layouts/layouts";
+import Stepper from "../components/Stepper";
+
 export default function Home() {
-  const { setLoading, loading } = useCheckAuth();
+  const steps = [
+    "Select Vessel Type",
+    "Transaction Type",
+    "Review and Confirm",
+  ];
 
-  const navigate = useNavigate();
-  useEffect(() => {
-    const user = async () => {
-      try {
-        const response = await axios.get(`${process.env.API_URL}/api/user`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        });
-        setLoading(false);
-      } catch (error) {
-        if (error.response.status === 401) {
-          localStorage.removeItem("authToken");
-          navigate("/login");
-        } else {
-          setError(
-            "There was an issue fetching user data. Please try again later."
-          );
-        }
-      }
-    };
-    user();
-  }, []);
-
+  const [currentStep, setCurrentStep] = useState(1);
+  const [completeStep, setCompleteStep] = useState(false);
+  const showStep = (currentStep) => {
+    switch (currentStep) {
+      case 1:
+        return <FirstStep />;
+      case 2:
+        return <SecondStep />;
+      case 3:
+        return <FirstStep />;
+      default:
+    }
+  };
   return (
-    <Container className={"h-screen flex flex-col items-center"}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <NavBar />
-          <Container variant="xCenter" className={`w-full h-full mt-20`}>
-            <Container
-              variant="xCenter"
-              className={`w-[1200px] relative h-[800px] rounded-xl  shadow-lg shadow-gray-500`}>
-              <Container className={`w-full h-full overflow-hidden`}>
-                <div className="bg-gradient-to-t from-amber-500/40 via-30% to-90% via-amber-400/40 to-transparent w-full rounded-xl h-full absolute z-10"></div>
-                <img
-                  src={i}
-                  alt=""
-                  className="aspect-video w-full right-0 h-full scaleX(-1) absolute rounded-xl"
-                />
-              </Container>
-              <Container
-                className={`z-20 bg-white shadow-lg shadow-gray-500 w-11/12 h-52 bottom-0 rounded-xl absolute translate-y-1/2`}
-                variant="xCenter"></Container>
-            </Container>
-          </Container>
-        </>
-      )}
-    </Container>
+    <main className="flex flex-col h-screen w-screen">
+      <Navigation />
+
+      <Container
+        className={`h-full min-w-[500px]  flex-col pt-20`}
+        variant="yCenter">
+        <Container className={`min-w-[720px]`}>
+          <Text variant="title" className={`text-center`}>Select Your Vessel for the Journey</Text>
+          <Text variant="p" className={`tracking-wide text-center mb-10`}>
+            Choose a vessel to begin your booking process.
+          </Text>
+          <Stepper
+            steps={steps}
+            completeStep={completeStep}
+            currentStep={currentStep}
+          />
+          {showStep(currentStep)}
+
+          {!completeStep && (
+            <Button
+              className={`mt-20 w-28 text-lg px-10 py-3`}
+              variant="borderPrimary"
+              onClick={() => {
+                currentStep === steps.length
+                  ? setCompleteStep(true)
+                  : setCurrentStep((prev) => prev + 1);
+              }}>
+              {currentStep === steps.length ? "Finish" : "Continue"}
+            </Button>
+          )}
+          {currentStep > 1 && !completeStep ? (
+            <Button
+              className={`mt-20 w-28 text-lg px-10 py-3`}
+              variant="borderWarning"
+              onClick={() => {
+                setCurrentStep((prev) => prev - 1);
+              }}>
+              {currentStep === 1 ? "Prev" : "Back"}
+              {currentStep}
+            </Button>
+          ) : null}
+        </Container>
+      </Container>
+      {/* <SecondStep /> */}
+    </main>
   );
 }

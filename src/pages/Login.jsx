@@ -16,7 +16,6 @@ import useCheckAuth from "../hooks/CheckAuth";
 import * as yup from "yup";
 const bg =
   "bg-gradient-to-br  from-indigo-300  via-indigo-400 via-10% to-indigo-700";
-
 export default function Login() {
   const { setLoading, loading } = useCheckAuth();
   useEffect(()=>{

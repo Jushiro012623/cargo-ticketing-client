@@ -1,0 +1,98 @@
+Login Page
+Features:
+Username and Password input fields.
+Company Logo displayed.
+Port-based restriction: Each user is assigned a port, except for the admin who has access to all ports.
+Implementation Strategy:
+User Authentication: Use Laravel’s built-in authentication with a login form in React.
+Port-Based Restriction: Use middleware to restrict access based on the user’s assigned port. If the user is an admin, allow access to all routes.
+Backend: Store the user’s port_id in the database. Implement middleware to check the user’s port during login and restrict access to specific features based on this.
+2. Home Page (Selection)
+Features:
+Dropdowns or selection fields for:
+    Vessel: List of vessels fetched from the database.
+    Voyage Number: Filter voyages based on selected vessel. // vessel's name, route, date, and other factors
+    Route (Out or In): Display routes with color coding.
+
+Category of Route: Restrict access based on the selected route.
+
+Implementation Strategy:
+    Frontend (React): Display a form with vessel selection, voyage number, and route (Out or In). Use React hooks to dynamically update the available voyages based on the vessel selected.
+
+    Backend (Laravel): Create endpoints to fetch vessels and voyage data. Use role-based access control to limit access to certain routes based on the user’s port and role.
+
+    Color Coding: Use predefined CSS classes for each route category to display the correct colors.
+
+3. Featured Page (Dashboard)
+Features:
+    Separate sections for:
+    Passengers
+    Drop Cargo (Baggage Slip, Bill of Lading)
+    Rolling Cargo
+
+Implementation Strategy:
+    Frontend (React): Implement a dashboard with cards or tabs for each category (Passengers, Drop Cargo, Rolling Cargo). Each tab will contain forms or tables for managing data (e.g., adding passengers or drop cargo details).
+
+    Backend (Laravel): Define controllers for each category to handle CRUD operations (Create, Read, Update, Delete). Data such as Baggage Slip and Bill of Lading can be generated as PDFs for download or printing.
+4. Boarding Pass (Passenger Output)
+Features:
+    Display details like:
+        Company Logo
+        QR Code (linking to the ticket)
+        Date/Time, Transaction Number, Vessel/Voyage Number
+        Route, Seat Number, Ticket Number
+        Amount, POS Details (Employee, Terminal No.)
+        Footer with “Welcome Aboard” message.
+
+Implementation Strategy:
+    Frontend (React): Generate a boarding pass page with dynamic data (ticket details). Use a library like react-qr-code to generate the QR code.
+   
+    Backend (Laravel): Ensure the boarding pass data is stored in the database (e.g., Ticket number, Passenger name, etc.). Create an endpoint that returns this data for the frontend.
+
+    PDF Export: Use Laravel’s dompdf package to create a downloadable/printable version of the boarding pass.
+
+5. Guide Slip (Drop Cargo Output)
+Features:
+    Display similar details to the boarding pass, but for drop cargo, including:
+    Baggage Number/BOL Number
+    Shipper Name, Contact, Route, Drop Cargo Type (Item, Qty, Amount)
+    Total Amount, Vessel/Voyage Number, POS Details (Employee, Terminal No.)
+    Name and Contact of Receiver
+
+Implementation Strategy:
+    Frontend (React): Design a guide slip page with dynamic data related to drop cargo. Use forms to input shipper, receiver, and cargo details. Display this data along with a generated QR code.
+
+    Backend (Laravel): Manage cargo details in a separate table (e.g., DropCargo) and provide endpoints to fetch and store cargo data. Generate the guide slip as a PDF for print/export.
+
+6. Rolling Cargo Ticket (Output)
+Features:
+    Display details for rolling cargo:
+    Vehicle Type Information (Declared value, Lane Meter for amount)
+    Add-ons
+    POS Details
+
+Implementation Strategy:
+    Frontend (React): Create a page to input rolling cargo details like vehicle type, declared value, and lane meter. Use bullet range selection for meter inputs. Calculate total amount dynamically based on meter length and add-ons.
+
+    Backend (Laravel): Handle the rolling cargo ticket generation by storing vehicle and cargo information. Like the boarding pass, this can also be exported as a PDF or displayed with a QR code.
+    Additional Implementation Details
+
+User Access Control:
+
+Use Laravel’s role-based access control to ensure users can only access features they are permitted to.
+For instance, a user in San Jose can access routes 2–4, while Semirara users can access routes 3–4, and so on.
+Implement this logic using policies or middleware to restrict access.
+QR Code Integration:
+
+Use a library like react-qr-code for React to generate QR codes on the frontend.
+Store a reference to the ticket in the database and link the QR code to that data, which can be retrieved when scanned.
+Data Management and Reporting:
+
+Create models and migrations for Tickets, Passengers, Drop Cargo, and Rolling Cargo.
+Use Laravel’s Eloquent ORM to manage and retrieve data for display on the frontend.
+Ensure reporting is available for POS transactions, cargo records, and passenger logs.
+UI/UX:
+
+Utilize a CSS framework like TailwindCSS for styling, and ensure a user-friendly experience.
+The company logo and design elements can be dynamically loaded for all output formats like boarding passes, guide slips, and tickets.
+This implementation covers the core components of your system, from login restrictions based on ports to the generation of tickets and slips for passengers and cargo. The backend (Laravel) handles data management and validation, while the frontend (React) provides dynamic user interaction with real-time data updates.
