@@ -8,7 +8,7 @@ export default function FormInput ({error, onFocus, id, name, label, variant = '
         <Label reference={id} variant={variant}>
           {label}
         </Label>
-        <Input name={name} id={id} {...props} variant={variant}/>
+        <Input name={name} id={id} {...props} variant={variant} onFocus={onFocus}/>
         <Text variant={variant} className={`text-sm `}>{error}</Text>
       </div>
     );

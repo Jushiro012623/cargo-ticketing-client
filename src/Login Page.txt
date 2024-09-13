@@ -78,21 +78,20 @@ Implementation Strategy:
     Additional Implementation Details
 
 User Access Control:
+    Use Laravel’s role-based access control to ensure users can only access features they are permitted to.
+    For instance, a user in San Jose can access routes 2–4, while Semirara users can access routes 3–4, and so on.
+    Implement this logic using policies or middleware to restrict access.
 
-Use Laravel’s role-based access control to ensure users can only access features they are permitted to.
-For instance, a user in San Jose can access routes 2–4, while Semirara users can access routes 3–4, and so on.
-Implement this logic using policies or middleware to restrict access.
 QR Code Integration:
+    Use a library like react-qr-code for React to generate QR codes on the frontend.
+    Store a reference to the ticket in the database and link the QR code to that data, which can be retrieved when scanned.
 
-Use a library like react-qr-code for React to generate QR codes on the frontend.
-Store a reference to the ticket in the database and link the QR code to that data, which can be retrieved when scanned.
 Data Management and Reporting:
+    Create models and migrations for Tickets, Passengers, Drop Cargo, and Rolling Cargo.
+    Use Laravel’s Eloquent ORM to manage and retrieve data for display on the frontend.
+    Ensure reporting is available for POS transactions, cargo records, and passenger logs.
 
-Create models and migrations for Tickets, Passengers, Drop Cargo, and Rolling Cargo.
-Use Laravel’s Eloquent ORM to manage and retrieve data for display on the frontend.
-Ensure reporting is available for POS transactions, cargo records, and passenger logs.
 UI/UX:
-
 Utilize a CSS framework like TailwindCSS for styling, and ensure a user-friendly experience.
 The company logo and design elements can be dynamically loaded for all output formats like boarding passes, guide slips, and tickets.
 This implementation covers the core components of your system, from login restrictions based on ports to the generation of tickets and slips for passengers and cargo. The backend (Laravel) handles data management and validation, while the frontend (React) provides dynamic user interaction with real-time data updates.

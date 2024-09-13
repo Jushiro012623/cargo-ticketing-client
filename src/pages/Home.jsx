@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navigation from "../layouts/Navigation";
 import { Container, Text, Button } from "../components/components";
 import { FirstStep, SecondStep } from "../layouts/layouts";
 import Stepper from "../components/Stepper";
-
+import CustomToast from "../components/CustomToast";
+import StepButton from "../layouts/StepButton";
+export const VesselRouteContext = React.createContext();
 export default function Home() {
   const steps = [
     "Select Vessel Type",
@@ -13,6 +15,17 @@ export default function Home() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [completeStep, setCompleteStep] = useState(false);
+  const [validateStep, setValidateStep] = useState();
+
+  const [type, setType] = useState();
+  const [vessel, setVessel] = useState();
+  const [route, setRoute] = useState();
+
+  useEffect(() => {
+    console.log("Type", type);
+    console.log("route", route);
+    console.log("vessel", vessel);
+  }, [route,type,vessel]);
   const showStep = (currentStep) => {
     switch (currentStep) {
       case 1:
@@ -25,50 +38,45 @@ export default function Home() {
     }
   };
   return (
-    <main className="flex flex-col h-screen w-screen">
-      <Navigation />
-
-      <Container
-        className={`h-full min-w-[500px]  flex-col pt-20`}
-        variant="yCenter">
-        <Container className={`min-w-[720px]`}>
-          <Text variant="title" className={`text-center`}>Select Your Vessel for the Journey</Text>
-          <Text variant="p" className={`tracking-wide text-center mb-10`}>
-            Choose a vessel to begin your booking process.
-          </Text>
-          <Stepper
-            steps={steps}
-            completeStep={completeStep}
-            currentStep={currentStep}
-          />
-          {showStep(currentStep)}
-
-          {!completeStep && (
-            <Button
-              className={`mt-20 w-28 text-lg px-10 py-3`}
-              variant="borderPrimary"
-              onClick={() => {
-                currentStep === steps.length
-                  ? setCompleteStep(true)
-                  : setCurrentStep((prev) => prev + 1);
-              }}>
-              {currentStep === steps.length ? "Finish" : "Continue"}
-            </Button>
-          )}
-          {currentStep > 1 && !completeStep ? (
-            <Button
-              className={`mt-20 w-28 text-lg px-10 py-3`}
-              variant="borderWarning"
-              onClick={() => {
-                setCurrentStep((prev) => prev - 1);
-              }}>
-              {currentStep === 1 ? "Prev" : "Back"}
-              {currentStep}
-            </Button>
-          ) : null}
+    <VesselRouteContext.Provider
+      value={{
+        vessel: [vessel, setVessel],
+        type: [type, setType],
+        route: [route, setRoute],
+        stateCurrentStep: [currentStep, setCurrentStep],
+        stateCompleteStep: [completeStep, setCompleteStep],
+        stateValidateStep: [validateStep, setValidateStep],
+    }}>
+      <main className="flex flex-col h-screen w-screen">
+        <Navigation />
+        <Container
+          className={`h-full min-w-[500px]  flex-col`}
+          variant="yCenter">
+          <Container className={`min-w-[720px] `}>
+            {validateStep && (
+              <CustomToast
+                className={`${validateStep ? "toast-exit" : ""} `}
+                message={`Please complete the form the proceed`}
+                variant="danger"
+              />
+            )}
+            <Stepper
+              steps={steps}
+              completeStep={completeStep}
+              currentStep={currentStep}
+            />
+            
+            {showStep(currentStep)}
+            <StepButton
+              steps={steps}
+              vessel={vessel}
+              route={route}
+              type={type}
+            />
+          </Container>
         </Container>
-      </Container>
-      {/* <SecondStep /> */}
-    </main>
+        {/* <SecondStep /> */}
+      </main>
+    </VesselRouteContext.Provider>
   );
 }

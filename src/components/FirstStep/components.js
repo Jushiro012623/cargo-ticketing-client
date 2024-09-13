@@ -1,4 +1,4 @@
-import RoutesContainer from './Routes'
+import VesselRoutesContainer from './VessleRoute'
 import VesselsContainer from './Vessels'
 
-export { RoutesContainer, VesselsContainer }
+export { VesselRoutesContainer, VesselsContainer }
