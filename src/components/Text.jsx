@@ -2,17 +2,19 @@ import clsx from "clsx";
 import React from "react";
 const variants = {
   default: "",
-  title: "text-3xl font-medium tracking-wide",
-  subtitle: "text-xl font-semibold tracking-tight",
+  small: 'text-xs',
+  title: "text-2xl font-medium tracking-wide",
+  subtitle: "text-md font-semibold tracking-tight",
   p: "text-md",
-  info: "text-sky-600",
+  info: "text-primary text-[16px] text-center",
+  infoSmall: "text-primary text-xs",
   detail: "text-sm tracking-wide ",
   note: "text-sm tracking-wide italic",
-  danger: "text-red-500",
-  success: "text-teal-500",
+  danger: "text-dark-error",
+  success: "text-accent-mint",
   text:'text-lg',
   lg: 'text-5xl',
-  buttonText: 'border hover:border-sky-500 hover:ring-2 hover:ring-sky-500 cursor-pointer px-10 rounded-lg py-3 text-lg'
+  buttonText: 'hover:border-primary hover:ring-2 hover:ring-primary cursor-pointer px-[2.3rem] rounded-lg py-3'
 };
 export default function Text({ variant = 'default', className, ...props }) {
   return <h1 className={clsx(variants[variant], className)} {...props} />;

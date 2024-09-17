@@ -31,19 +31,19 @@ export default function Register() {
           className={`w-[500px] bg-white px-12 py-14 rounded-lg shadow-gray-800/40 shadow-md`}>
           <Container className="mb-10">
             <Logo />
-            <Text variant="subtitle" className="mb-2  pt-4 mt-4 ">
+            <Text variant="subtitle" className="pt-4">
               Register
             </Text>
-            <Text>
+            <Text variant="small">
               Let's get started, book your cargo online with ease and
               confidence!{" "}
             </Text>
           </Container>
           <Form />
-          <Text className="text-center mt-5">
+          <Text className="text-center mt-3" variant="small">
             Already have an account ?{" "}
             <Link
-              className="font-bold text-sky-600 hover:text-sky-700"
+              className="font-bold text-primary hover:text-primary-hover"
               to="/login">
               Login
             </Link>
@@ -92,30 +92,28 @@ const Form = () => {
       password_confirmation: event.target.password_confirmation.value,
       agree: event.target.agreeToTerms.checked,
     };
-    try {
-      setLoader(true);
+    try{
+      setLoader(true)
       await schema.validate(formData, { abortEarly: false });
-      axios
-        .post(`${process.env.API_URL}/api/register`, formData, {
-          headers: { Accept: "application/json" },
-        })
-        .then((response) => {
-          console.log(response.data);
-          navigate("/login");
-        })
-        .catch((error) => {
-          console.error(
-            "Unable to register, Please try again later" + error.message
-          );
-        });
-    } catch (error) {
-      setLoader(false);
+      await axios.post(`${process.env.API_URL}/api/register` , formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      navigate("/login");
+    }catch(error){
       const newError = {};
-      error.inner.forEach((err) => {
-        newError[err.path] = err.message;
-        console.error("Unable to submit the form: " + err.message);
-      });
+      if (error.inner) {
+        error.inner.forEach((err) => {
+          newError[err.path] = err.message;
+          console.error("Unable to submit the form: " + err.message);
+        });
+      } else {
+        console.error("An unexpected error occurred: ", error);
+      }
       setError(newError);
+    }finally{
+      setLoader(false);
     }
   };
   const formInputs = [
@@ -131,7 +129,7 @@ const Form = () => {
     },
   ];
   return (
-    <form onSubmit={createUser} className="flex flex-col gap-6">
+    <form onSubmit={createUser} className="flex flex-col gap-5">
       {formInputs.map((input, index) => (
         <FormInput
           key={index}
@@ -147,22 +145,22 @@ const Form = () => {
       ))}
 
       <Container variant="topNav">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 ">
           <Checkbox name="agreeToTerms" className="cursor-pointer" />
-          <Text>
+          <Text variant="small" className={`translate-y-[1px]`}>
             I agree to the{" "}
-            <Link className="font-semibold text-sky-600 hover:text-sky-700">
+            <Link className="font-semibold text-primary hover:text-primary-hover">
               terms of use
             </Link>{" "}
             and{" "}
-            <Link className="font-semibold text-sky-600 hover:text-sky-700">
+            <Link className="font-semibold text-primary hover:text-primary-hover">
               privacy policy
             </Link>
           </Text>
         </div>
       </Container>
 
-      <Button className={`min-h-10 flex items-center justify-center`}>
+      <Button className={`min-h-9 flex items-center justify-center`}>
         {!loader ? "Register" : <ClipLoader color="#ffffff" size={15} />}
       </Button>
     </form>

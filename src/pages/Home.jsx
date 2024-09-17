@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import Navigation from "../layouts/Navigation";
-import { Container, Text, Button } from "../components/components";
-import { FirstStep, SecondStep } from "../layouts/layouts";
+import { Container} from "../components/components";
+import { FirstStep, SecondStep, Navigation } from "../layouts/layouts";
 import Stepper from "../components/Stepper";
-import CustomToast from "../components/CustomToast";
-import StepButton from "../layouts/StepButton";
+import StepButton from "../components/StepButton";
+import { ToastContainer } from "react-toastify";
 export const VesselRouteContext = React.createContext();
 export default function Home() {
   const steps = [
@@ -15,17 +14,20 @@ export default function Home() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [completeStep, setCompleteStep] = useState(false);
-  const [validateStep, setValidateStep] = useState();
 
+  const [passengerType, setPassengerType] = useState();
   const [type, setType] = useState();
   const [vessel, setVessel] = useState();
   const [route, setRoute] = useState();
+  const [routeName, setRouteName] = useState();
 
   useEffect(() => {
     console.log("Type", type);
     console.log("route", route);
     console.log("vessel", vessel);
-  }, [route,type,vessel]);
+    console.log("passengerTypes", passengerType)
+    console.log("route name", routeName)
+  }, [route,type,vessel,passengerType]);
   const showStep = (currentStep) => {
     switch (currentStep) {
       case 1:
@@ -45,34 +47,21 @@ export default function Home() {
         route: [route, setRoute],
         stateCurrentStep: [currentStep, setCurrentStep],
         stateCompleteStep: [completeStep, setCompleteStep],
-        stateValidateStep: [validateStep, setValidateStep],
+        passengerType: [passengerType, setPassengerType],
+        stateRouteName: [routeName, setRouteName]
     }}>
       <main className="flex flex-col h-screen w-screen">
         <Navigation />
-        <Container
-          className={`h-full min-w-[500px]  flex-col`}
-          variant="yCenter">
-          <Container className={`min-w-[720px] `}>
-            {validateStep && (
-              <CustomToast
-                className={`${validateStep ? "toast-exit" : ""} `}
-                message={`Please complete the form the proceed`}
-                variant="danger"
-              />
-            )}
-            <Stepper
-              steps={steps}
-              completeStep={completeStep}
-              currentStep={currentStep}
-            />
-            
-            {showStep(currentStep)}
-            <StepButton
-              steps={steps}
-              vessel={vessel}
-              route={route}
-              type={type}
-            />
+        <Container className={`h-full min-w-[500px] gap-5`} variant="xCenter">
+          <Container>
+            <Stepper steps={steps} completeStep={completeStep} currentStep={currentStep} /> 
+            <div className=" mt-10 gap-4 p-10 bg-neutral/20 relative">
+                {showStep(currentStep)}
+                {vessel && route && type && (
+                  <StepButton steps={steps} vessel={vessel} route={route} type={type} />
+                )}  
+            </div>
+              
           </Container>
         </Container>
         {/* <SecondStep /> */}

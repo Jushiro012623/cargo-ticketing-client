@@ -1,4 +1,4 @@
 import FirstStep from "./FirstStep"
 import SecondStep from "./SecondStep"
-
-export {FirstStep, SecondStep}
+import Navigation from "./Navigation"
+export {FirstStep, SecondStep, Navigation}

@@ -65,28 +65,29 @@ const Form = () => {
     try {
       setLoader(true);
       await schema.validate(formData, { abortEarly: false });
-      axios
+      const response = await axios
         .post(`${process.env.API_URL}/api/login`, formData, {
           headers: { Accept: "application/json" },
         })
-        .then((response) => {
-          const token = response.data.data.token;
-          localStorage.setItem("authToken", token);
-          navigate("/profile");
-        })
-        .catch((error) => {
-          if (error.response && error.response.data) {
-            setLoginErr(error.response.data.message); // Capture the backend error message
-          }
-        });
+      const token = response.data.data.token;
+      localStorage.setItem("authToken", token);
+      navigate("/profile");
     } catch (error) {
+      if (error.response && error.response.data) {
+        setLoginErr(error.response.data.message); // Capture the backend error message
+      } else if (error.inner){
+        error.inner.forEach((err) => {
+          newError[err.path] = err.message;
+          console.error("Login Falied: " + err.message);
+        }); 
+        setLoginErr(null);
+        setError(newError);
+      }else{
+        console.error("Login Failed: " + error.message);
+        setLoginErr("An error occurred, please try again later.");
+      }
+    } finally {  
       setLoader(false);
-      error.inner.forEach((err) => {
-        newError[err.path] = err.message;
-        console.error("Login Falied: " + err.message);
-      });
-      setLoginErr(null);
-      setError(newError);
     }
   };
   const formInputs = [
@@ -94,7 +95,7 @@ const Form = () => {
     { name: "password", label: "Password", type: "password" },
   ];
   return (
-    <form onSubmit={loginUser} className="flex flex-col gap-6">
+    <form onSubmit={loginUser} className="flex flex-col gap-5">
       {formInputs.map((input, index) => (
         <React.Fragment>
           <FormInput
@@ -112,16 +113,16 @@ const Form = () => {
         </React.Fragment>
       ))}
       <Container variant="topNav">
-        <Container className="flex items-center gap-3 w-full">
+        <Container variant="topNav" className="flex items-center gap-2 w-full">
           <Checkbox name="remember" className="cursor-pointer" />
-          <Container variant="topNav" className={"w-full"}>
+          <Container variant="topNav" className={"w-full translate-y-[1px]"}>
             <Label>Remember me</Label>
-            <Text>Forgot Password?</Text>
+            <Text variant="small">Forgot Password?</Text>
           </Container>
         </Container>
       </Container>
 
-      <Button className={`min-h-10 flex items-center justify-center`}>
+      <Button className={`min-h-9 flex items-center justify-center`}>
         {!loader ? "Login" : <ClipLoader color="#ffffff" size={15} />}
       </Button>
     </form>
@@ -129,22 +130,22 @@ const Form = () => {
 };
 const FormHeader = () => {
   return (
-    <Container className="">
+    <Container className="mb-10">
       <Logo />
-      <Text variant="subtitle" className="pt-4 mt-4">
+      <Text variant="subtitle" className="pt-4">
         Login
       </Text>
-      <Text>Continue where you left off with Laravel.</Text>
+      <Text variant="small">Continue where you left off with Laravel.</Text>
     </Container>
   );
 };
 const FormFooter = () => {
   return (
     <Container variant="sideNav">
-      <Text className="mt-5">
+      <Text className="mt-3" variant="small">
         Don't have an account yet ?{" "}
         <Link
-          className="font-bold text-sky-600 hover:text-sky-700"
+          className="font-bold text-primary hover:text-primary-hover"
           to="/register">
           Register
         </Link>

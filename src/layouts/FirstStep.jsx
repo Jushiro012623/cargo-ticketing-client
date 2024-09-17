@@ -4,7 +4,7 @@ import {VesselsContainer,VesselRoutesContainer,} from "../components/FirstStep/c
 export default function FirstStep() {
   return (
     <>
-      <Container className={`flex-col`} variant="yCenter">
+      <Container>
         <VesselsContainer />
         <VesselRoutesContainer />
       </Container>

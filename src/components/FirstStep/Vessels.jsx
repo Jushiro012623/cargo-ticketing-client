@@ -13,34 +13,23 @@ const VesselContainer = ({}) => {
   ];
   return (
     <>
-    <Text variant="info" className={`text-xl text-center mt-16`}>Choose a vessel to begin your booking process.</Text>
+      <Text variant="info" className={`text-[16px] text-center`}>
+        Choose a vessel to begin your booking process.
+      </Text>
       <div className="flex gap-12 mt-5">
         {vessels.map((vessel, index) => (
-          <Vessel
-            vessel={vessel.name}
-            key={index}
-            desc={vessel.desc}
-            onClick={() => {
-              setStateVesselType(vessel.name);
-            }}
-            className={isActive(stateVesselType, vessel.name)}
-          />
+          <div key={index}
+            className={`${isActive(stateVesselType, vessel.name)} hover:border-primary hover:ring-2 hover:ring-primary w-52 py-8 rounded-xl flex items-center flex-col justify-center cursor-pointer`}
+            onClick={() => {setStateVesselType(vessel.name);}}
+            >
+            <Text className={`uppercase text-sm`}>{vessel.name}</Text>
+            <Text variant="detail" className={`text-xs text-primary`}>
+              {vessel.desc}
+            </Text>
+          </div>
         ))}
       </div>
     </>
   );
 };
-const Vessel = ({ className, vessel, desc, ...props }) => {
-  return (
-    <div
-      className={`${className} border  hover:border-sky-500 hover:ring-2 hover:ring-sky-500 w-72 py-5 rounded-xl flex items-center flex-col justify-center cursor-pointer`}
-      {...props}>
-      <Text className={`uppercase text-lg`}>{vessel}</Text>
-      <Text variant="detail" className={`text-sky-500`}>
-        {desc}
-      </Text>
-    </div>
-  );
-};
-
 export default VesselContainer;

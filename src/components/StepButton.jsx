@@ -1,24 +1,16 @@
 import React from 'react'
-import { useContext } from 'react';
 import { VesselRouteContext } from '../pages/Home';
-import Button from '../components/Button';
+import Button from './Button';
 
 const StepButton = ({ steps, vessel, route, type }) => {
-    const { stateCurrentStep, stateCompleteStep, stateValidateStep } = React.useContext(VesselRouteContext);
+    const { stateCurrentStep, stateCompleteStep } = React.useContext(VesselRouteContext);
 
     const [currentStep, setCurrentStep] = stateCurrentStep;
     const [completeStep, setCompleteStep] = stateCompleteStep;
-    const [validateStep, setValidateStep] = stateValidateStep;
-    
     const handleNext = (event) => {
       event.preventDefault();
       if (currentStep === 1 && (!vessel || !route || !type)) {
-        setValidateStep(true);
-        console.log(route.id)
-        setTimeout(() => {
-          setValidateStep(false);
-        }, 4000);
-        return;
+        // return
       }
       currentStep === steps.length
         ? setCompleteStep(true)
@@ -26,17 +18,23 @@ const StepButton = ({ steps, vessel, route, type }) => {
     };
     return (
       <div className="">
-        {!completeStep && (
-          <Button
-            className={` w-28 text-lg px-10 py-3`}
-            variant="primary"
+        
+      {vessel && route && type && (
+        <>
+          {!completeStep && (
+            <Button
+            className={`min-w-20 text-sm px-5 py-3`}
+            // variant="primary"
+            
             onClick={handleNext}>
-            {currentStep === steps.length ? "Finish" : "Continue"}
-          </Button>
-        )}
+              {currentStep === steps.length ? "Finish" : "Continue"}
+            </Button>
+          )}
+        </>
+      )}
         {currentStep > 1 && !completeStep ? (
           <Button
-            className={`w-28 text-lg px-10 py-3`}
+            className={`min-w-20 text-sm px-5 py-3`}
             variant="borderWarning"
             onClick={() => {
               setCurrentStep((prev) => prev - 1);
@@ -46,8 +44,8 @@ const StepButton = ({ steps, vessel, route, type }) => {
           </Button>
         ) : null}
       </div>
-    );
-  };
+    )
+};
   
 
   export default StepButton

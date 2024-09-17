@@ -10,7 +10,7 @@ export default function Input({variant='primary', ...props}) {
   return (
     <input
       className={clsx(
-        "border focus:ring-1 py-2 px-3 outline-none rounded-lg bg-transparent border-gray-800/30 ring-gray-800/30",
+        "border focus:ring-1 py-2 text-xs px-3 outline-none rounded-lg bg-transparent border-gray-800/30 ring-gray-800/30",
         variants[variant]
       )}
       {...props}

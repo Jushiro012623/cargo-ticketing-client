@@ -9,7 +9,7 @@ export default function Label({ reference, variant = "default", ...props }) {
   return (
     <label
       htmlFor={reference}
-      className={clsx("", variants[variant])}
+      className={clsx("text-xs", variants[variant])}
       {...props}
     />
   );

@@ -1,93 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #d4d4d4;
-    color: #343a40;
+  font-family: "Roboto", sans-serif;
+  @apply bg-bg;
+  color: #343a40;
 }
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
-}
- 
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
-}
- 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-.step-item:not(:first-child):after{
-    @apply content-['']  bg-gray-400 absolute w-full h-1 right-2/4 top-1/2 -translate-y-2/4
-}
-.step {
-    @apply w-12 h-12 flex items-center justify-center z-10 relative bg-gray-400 rounded-full
-} 
-.active .step{
-    @apply bg-sky-600
-}
-.step-desc{
-    @apply absolute bottom-0 translate-y-10 
-}
-.active .step-desc{
-    @apply text-sky-600
-}
-.active .step-info{ 
-    @apply text-sky-600
-}
-.complete .step-info{
-    @apply text-teal-500
-}
-.complete .step{
-    @apply bg-teal-500
-}
-.complete .step-desc{
-    @apply text-teal-500
-}
-.complete:not(:first-child):after, 
-.active:not(:first-child):after{
-    @apply bg-teal-500
+  width: 10px;
 }
 
-.toast::before{
-    @apply content-[''] absolute left-0 bg-slate-950/50 bottom-0 h-1 w-full ;
-    animation: toasLoad 2.2s ease-out forwards;
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
-.toast-exit{
-    animation: toasterExit .3s ease-out 2s forwards;
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.step-item:not(:first-child):after {
+  @apply content-['']  bg-slate-500/50   absolute w-full h-1 right-2/4 top-1/2 -translate-y-2/4
+}
+.step {
+  @apply w-10 h-10 flex items-center justify-center z-10 relative border-4 bg-bg text-slate-500/50   border-slate-500/50  rounded-full;
+}
+.active .step {
+  @apply bg-primary border-none text-white;
+}
+.step-desc {
+  @apply absolute bottom-0 translate-y-7 tracking-wide;
+}
+.active .step-desc {
+  @apply text-primary;
+}
+.active .step-info {
+  @apply text-primary;
+}
+.complete .step-info {
+  @apply text-primary ;
+}
+.complete .step {
+  @apply bg-primary border-none text-white;
+}
+.complete .step-desc {
+  @apply text-primary;
+}
+.complete:not(:first-child):after,
+.active:not(:first-child):after {
+  @apply bg-primary;
+}
+
+.toast::before {
+  @apply content-[''] absolute left-0 bg-slate-950/50 bottom-0 h-1 w-full;
+  animation: toasLoad 2.2s ease-out forwards;
+}
+.toast-exit {
+  animation: toasterExit 0.3s ease-out 0.8s forwards;
 }
 @keyframes toasLoad {
-    100%{
-        width: 0;
-    }
+  100% {
+    width: 0;
+  }
 }
 @keyframes toasterExit {
-    0%{
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100%{
-        opacity: 0;
-        transform: translateY(100%)
-    }
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 @keyframes toaster {
-    0%{
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    100%{
-        opacity: 1;
-        transform: translateX(0)
-    }
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

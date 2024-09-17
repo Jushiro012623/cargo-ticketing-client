@@ -1,9 +1,12 @@
 import React from "react"
 
 export default function isActive (type, setType){
+  let style = `border shadow-md ` 
+  let addedstyle
     if(type == setType){
-      return 'border-sky-500 ring-2 ring-sky-500'
+      addedstyle = 'border-primary ring-2 ring-primary'
     }else{
-      return 'border-gray-800/40'
+      addedstyle = 'border-slate-500/40'
     }
+    return `${style} ${addedstyle}`
   }
