@@ -4,7 +4,7 @@
 @tailwind utilities;
 body {
   font-family: "Roboto", sans-serif;
-  @apply bg-bg;
+  @apply bg-white;
   color: #343a40;
 }
 /* width */
@@ -28,35 +28,35 @@ body {
   background: #555;
 }
 .step-item:not(:first-child):after {
-  @apply content-['']  bg-slate-500/50   absolute w-full h-1 right-2/4 top-1/2 -translate-y-2/4
+  @apply content-['']  bg-dark-border   absolute w-full h-[2px] right-2/4 top-1/2 -translate-y-2/4
 }
 .step {
-  @apply w-10 h-10 flex items-center justify-center z-10 relative border-4 bg-bg text-slate-500/50   border-slate-500/50  rounded-full;
+  @apply w-10 h-10 flex items-center justify-center z-10 relative border-2 bg-white text-dark-border   border-dark-border  rounded-full;
 }
 .active .step {
-  @apply bg-primary border-none text-white;
+  @apply bg-custom-600 border-none text-white;
 }
 .step-desc {
   @apply absolute bottom-0 translate-y-7 tracking-wide;
 }
 .active .step-desc {
-  @apply text-primary;
+  @apply text-custom-600;
 }
 .active .step-info {
-  @apply text-primary;
+  @apply text-custom-600;
 }
 .complete .step-info {
-  @apply text-primary ;
+  @apply text-custom-600 ;
 }
 .complete .step {
-  @apply bg-primary border-none text-white;
+  @apply bg-custom-600 border-none text-white;
 }
 .complete .step-desc {
-  @apply text-primary;
+  @apply text-custom-600;
 }
 .complete:not(:first-child):after,
 .active:not(:first-child):after {
-  @apply bg-primary;
+  @apply bg-custom-600;
 }
 
 .toast::before {

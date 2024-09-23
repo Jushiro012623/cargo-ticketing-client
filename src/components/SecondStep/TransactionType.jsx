@@ -6,8 +6,8 @@ import VesselContainer from "../FirstStep/Vessels";
 import { VesselRouteContext } from "../../pages/Home";
 
 export default function TransactionType({}) {
-  const { passengerType } = React.useContext(VesselRouteContext);
-  const [statePassengerType, setStatePassengerType] = passengerType;
+  const { shipType } = React.useContext(VesselRouteContext);
+  const [stateShipType, setStateShipType] = shipType;
 
   const passengerTypes = [
     { icon: ship, label: "Rolling Cargo" },
@@ -22,8 +22,8 @@ export default function TransactionType({}) {
         <div className="flex gap-12 mt-10">
         {passengerTypes.map((passenger, index) => (
             <div key={index} 
-            className={`${isActive(statePassengerType, passenger.label)} border-gray-400 hover:border-sky-500 hover:ring-2 hover:ring-sky-500 w-52 py-5 rounded-xl flex items-center flex-col justify-center cursor-pointer`}
-            onClick={() => {setStatePassengerType(passenger.label);}}>
+            className={`${isActive(stateShipType, passenger.label)} border-gray-400 hover:border-sky-500 hover:ring-2 hover:ring-sky-500 w-52 py-5 rounded-xl flex items-center flex-col justify-center cursor-pointer`}
+            onClick={() => {stateShipType === passenger.label ? setStateShipType(null) : setStateShipType(passenger.label)}}>
                 <img src={passenger.icon} alt="icon" className="w-24" />
                 <Text variant="infoSmall">{passenger.label}</Text>
             </div>

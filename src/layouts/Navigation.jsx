@@ -4,7 +4,7 @@ import { GoGear } from "react-icons/go";
 import Logo from "../components/Logo";
 export default function Navigation({name = 'Randy Rizzler Barurot'}) {
   return (
-    <Container className="w-full h-28 flex items-center justify-between px-20">
+    <Container className="w-full h-20 flex items-center justify-between px-20">
       <Logo />
       <div className="flex items-center gap-4">
         <Text variant="small">{name}</Text>
@@ -12,4 +12,4 @@ export default function Navigation({name = 'Randy Rizzler Barurot'}) {
       </div>
     </Container>
   );
-}
+} 

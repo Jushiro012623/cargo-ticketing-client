@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container} from "../components/components";
+import { Container, Summary} from "../components/components";
 import { FirstStep, SecondStep, Navigation } from "../layouts/layouts";
 import Stepper from "../components/Stepper";
 import StepButton from "../components/StepButton";
@@ -7,27 +7,20 @@ import { ToastContainer } from "react-toastify";
 export const VesselRouteContext = React.createContext();
 export default function Home() {
   const steps = [
-    "Select Vessel Type",
-    "Transaction Type",
-    "Review and Confirm",
+    "Route",
+    "Details",
+    "Complete",
   ];
-
   const [currentStep, setCurrentStep] = useState(1);
   const [completeStep, setCompleteStep] = useState(false);
 
-  const [passengerType, setPassengerType] = useState();
+  const [shipType, setShipType] = useState();
   const [type, setType] = useState();
   const [vessel, setVessel] = useState();
   const [route, setRoute] = useState();
-  const [routeName, setRouteName] = useState();
+  const [origin, setOrigin] = useState();
+  const [destination, setDestination] = useState();
 
-  useEffect(() => {
-    console.log("Type", type);
-    console.log("route", route);
-    console.log("vessel", vessel);
-    console.log("passengerTypes", passengerType)
-    console.log("route name", routeName)
-  }, [route,type,vessel,passengerType]);
   const showStep = (currentStep) => {
     switch (currentStep) {
       case 1:
@@ -47,24 +40,26 @@ export default function Home() {
         route: [route, setRoute],
         stateCurrentStep: [currentStep, setCurrentStep],
         stateCompleteStep: [completeStep, setCompleteStep],
-        passengerType: [passengerType, setPassengerType],
-        stateRouteName: [routeName, setRouteName]
+        shipType: [shipType, setShipType],
+        stateOrigin: [origin, setOrigin],
+        stateDestination: [destination, setDestination]
     }}>
-      <main className="flex flex-col h-screen w-screen">
+      <main>
         <Navigation />
         <Container className={`h-full min-w-[500px] gap-5`} variant="xCenter">
           <Container>
-            <Stepper steps={steps} completeStep={completeStep} currentStep={currentStep} /> 
-            <div className=" mt-10 gap-4 p-10 bg-neutral/20 relative">
+            <Stepper steps={steps} completeStep={completeStep} currentStep={currentStep} />
+            <div className="gap-4 p-10 border rounded-md shadow-lg relative w-[847px]">
                 {showStep(currentStep)}
-                {vessel && route && type && (
-                  <StepButton steps={steps} vessel={vessel} route={route} type={type} />
-                )}  
-            </div>
-              
+                <StepButton steps={steps} vessel={vessel} route={route} type={type}  />
+            </div>  
           </Container>
+          <div className="h-auto">
+            <Summary 
+              type={type} vessel={vessel} destination={destination} origin={origin} shipType={shipType}
+            />
+          </div>
         </Container>
-        {/* <SecondStep /> */}
       </main>
     </VesselRouteContext.Provider>
   );

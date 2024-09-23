@@ -1,7 +1,7 @@
 import React from 'react'
 import { VesselRouteContext } from '../pages/Home';
 import Button from './Button';
-
+import { FaArrowRight } from "react-icons/fa";
 const StepButton = ({ steps, vessel, route, type }) => {
     const { stateCurrentStep, stateCompleteStep } = React.useContext(VesselRouteContext);
 
@@ -17,32 +17,26 @@ const StepButton = ({ steps, vessel, route, type }) => {
         : setCurrentStep((prev) => prev + 1);
     };
     return (
-      <div className="">
-        
-      {vessel && route && type && (
-        <>
-          {!completeStep && (
-            <Button
-            className={`min-w-20 text-sm px-5 py-3`}
-            // variant="primary"
-            
-            onClick={handleNext}>
-              {currentStep === steps.length ? "Finish" : "Continue"}
-            </Button>
-          )}
-        </>
-      )}
+      <div className="mt-5 pt-5 border-t flex justify-between">
         {currentStep > 1 && !completeStep ? (
           <Button
             className={`min-w-20 text-sm px-5 py-3`}
-            variant="borderWarning"
+            variant="borderBlack"
             onClick={() => {
               setCurrentStep((prev) => prev - 1);
             }}>
             {currentStep === 1 ? "Prev" : "Back"}
-            {currentStep}
           </Button>
-        ) : null}
+        ) : <div></div>}
+        <>
+          <Button
+          variant='black'
+          className={`min-w-20 text-sm px-5 py-3 self-end flex items-center gap-2`}
+          onClick={handleNext}>
+            {currentStep === steps.length ? "Finish" : "Continue"}
+            <FaArrowRight />
+          </Button>
+      </>
       </div>
     )
 };

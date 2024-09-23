@@ -7,4 +7,7 @@ import Container from "./Container";
 import Logo from "./Logo";
 import FormInput from "./FormInput";
 import Loader from "./Loader";
-export { Button, Input, Label, Text, Checkbox,Container,Logo,FormInput,Loader};
+import Summary from "./Summary";
+import ShipmentTypeSummary from "./ShipmentTypeSummary";
+
+export { Summary, Button, Input, Label, Text, Checkbox,Container,Logo,FormInput,Loader, ShipmentTypeSummary};

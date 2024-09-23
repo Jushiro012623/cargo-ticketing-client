@@ -9,7 +9,9 @@ export const variants = {
   warning: "bg-yellow-600 hover:bg-yellow-700 text-white ",
   info: "bg-cyan-600 hover:bg-cyan-700 text-white ",
   violet: "bg-indigo-600 hover:bg-indigo-700 text-white ",
-
+  black: "bg-custom-900 text-white rounded-sm",
+  
+  borderBlack: "border-custom-900 border text-custom-900 rounded-sm",
   borderPrimary: "border text-primary hover:text-sky-700 border-primary hover:border-sky-700",
   borderDanger: "border text-red-500 hover:text-white border-red-500 hover:bg-red-500",
   borderSuccess: "border text-teal-600 hover:text-teal-700 border-teal-600 hover:border-teal-700",
