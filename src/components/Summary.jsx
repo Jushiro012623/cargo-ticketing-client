@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Text,ShipmentTypeSummary } from './components'
 import { FaChevronRight, FaChevronDown, FaSketch, FaDiceD20   } from "react-icons/fa";
 import { VesselRouteContext } from '../pages/Home';
-export default function Summary({vessel, type, origin, destination, shipType}) {
+export default function Summary({vessel, type, origin, destination, shipType, name, userDiscount, userAddons}) {
   const [firstStepSummary, setFirstStepSummary] = useState('')
   const [secondStepSummary, setSecondStepSummary] = useState('')
   const {stateCurrentStep} = React.useContext(VesselRouteContext);
@@ -29,9 +29,9 @@ export default function Summary({vessel, type, origin, destination, shipType}) {
                         title="Discount" 
                         data={{
                             secondText: 'Type', 
-                            secondTextValue: origin, 
+                            secondTextValue: userDiscount, 
                             thirdText: 'Add Ons', 
-                            thirdTextValue: destination
+                            thirdTextValue: userAddons
                     }} />
         case 'Rolling Cargo':
             
@@ -61,7 +61,7 @@ export default function Summary({vessel, type, origin, destination, shipType}) {
     {
       summaryNames: 'My Info', 
       values: [
-                {summaryCateg: 'Name', summaryCategValue: origin},
+                {summaryCateg: 'Name', summaryCategValue: name},
                 {summaryCateg: 'Email', summaryCategValue: destination},
               ] ,
     },
@@ -132,8 +132,8 @@ const SummaryPartition = ({data, ...props}) =>{
             <Text variant='fadeLabel' className={`font-semibold w-full border-b cursor-pointer mt-4`} >{element.summaryNames}</Text> 
             <div className={`w-full animate-appear`}>
               {element.values && element.values.map((value, i)=>(
-                <Text key={i} className={`flex justify-between text-sm font-medium w-full text-custom-900/70 mt-2 `}>{value.summaryCateg}: 
-                  <span className={`text-`}>{value.summaryCategValue ? value.summaryCategValue: "N/A"}</span>
+                <Text key={i} className={`flex justify-between text-sm font-medium w-full text-custom-900/70 mt-2 capitalize `}>{value.summaryCateg}: 
+                  <span className={``}>{value.summaryCategValue ? value.summaryCategValue: "N/A"}</span>
                 </Text>              
               ))}
             </div>

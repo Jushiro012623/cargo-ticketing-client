@@ -50,7 +50,6 @@ export default function User() {
         },
       }).then(response =>{navigate('/login')})
     }catch(e) {
-      console.log(e);
     }
   }
   return (

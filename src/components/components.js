@@ -9,5 +9,6 @@ import FormInput from "./FormInput";
 import Loader from "./Loader";
 import Summary from "./Summary";
 import ShipmentTypeSummary from "./ShipmentTypeSummary";
+import StepHeader from "./StepHeader";
 
-export { Summary, Button, Input, Label, Text, Checkbox,Container,Logo,FormInput,Loader, ShipmentTypeSummary};
+export { Summary, Button, Input, Label, Text, Checkbox,Container,Logo,FormInput,Loader, ShipmentTypeSummary, StepHeader};

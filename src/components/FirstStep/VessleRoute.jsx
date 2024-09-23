@@ -40,7 +40,6 @@ const VesselRoutesContainer = ({}) => {
         console.error(error);
       } finally {
         setLoading(false);
-        console.log(data);
       }
     };
     fetchData();
@@ -61,8 +60,6 @@ const VesselRoutesContainer = ({}) => {
   return (
     <>
       <div className={`w-full mt-5 flex flex-col ${stateType ==  undefined ? 'h-48' : 'h-[16.3rem]  transition-height duration-500' } `}>
-        {console.log(stateType)
-        }
         <div>
           <Text variant="p">Select Transit Type</Text>
           <div className="flex gap-5 mt-5 ">
@@ -87,7 +84,7 @@ const VesselRoutesContainer = ({}) => {
             <FaExclamationCircle />
             <p className="text-xs ml-2">Note, Please select a transit type before choosing a route.</p>
           </div>
-          <Text variant="p">Available Routes</Text>
+          <Text variant="p">Select Routes</Text>
           {loading ? (
             <BarLoader color="#0284C7" />
           ) : (

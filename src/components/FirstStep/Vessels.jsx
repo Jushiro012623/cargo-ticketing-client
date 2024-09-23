@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import isActive from "../../hooks/isActive";
-import { Text } from "../components";
+import { StepHeader, Text } from "../components";
 import { VesselRouteContext } from "../../pages/Home";
 import { FaCheck } from "react-icons/fa";
 const VesselContainer = ({}) => {
@@ -16,23 +16,16 @@ const VesselContainer = ({}) => {
   const handleSelection = (vessel) => {
     //if true when clicked
     if( stateVesselType === vessel.name){
-      console.log('false')
       setStateVesselType(null);
       setCurrentSelection(false);
     }else{
-      console.log('true')
       setStateVesselType(vessel.name);
       setCurrentSelection(true);
     }
   }
   return (
     <>
-      <div className="border-b pb-5">
-        <Text variant="subtitle" className={`text-[16px] mb-2`}>
-            Choose a vessel to begin your booking process.
-        </Text>
-        <Text variant="fadeLabel">Discover the Best Options for Your Trip.</Text>
-      </div>
+      <StepHeader data={{step:"1", title:"Choosing the Best Choices", subtitle:"Discover the Best Options for Your Trip"}}/>
       
       <Text variant="p" className={`mt-5 font-medium`}>Select Vessel Type</Text>
       <div className="flex  gap-5 mt-5">

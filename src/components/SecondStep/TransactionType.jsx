@@ -1,31 +1,32 @@
 import React from "react";
 import { car, boat, ship } from "../../assets/svg/svg";
-import { Text } from "../components";
+import { StepHeader, Text } from "../components";
 import isActive from "../../hooks/isActive";
 import VesselContainer from "../FirstStep/Vessels";
 import { VesselRouteContext } from "../../pages/Home";
-
+import { GiAtomicSlashes } from "react-icons/gi";
 export default function TransactionType({}) {
   const { shipType } = React.useContext(VesselRouteContext);
   const [stateShipType, setStateShipType] = shipType;
 
   const passengerTypes = [
-    { icon: ship, label: "Rolling Cargo" },
-    { icon: boat, label: "Passenger" },
-    { icon: ship, label: "Drop Cargo" },
+    { icon: <GiAtomicSlashes />, label: "Rolling Cargo" },
+    { icon: <GiAtomicSlashes />, label: "Passenger" },
+    { icon: <GiAtomicSlashes />, label: "Drop Cargo" },
   ]
   return (
     <>
-        <Text variant="info" >
-            Please select the type of transaction you wish to proceed with
+        <StepHeader data={{step:"2", title:"Picking Your Transaction.", subtitle:"Fill up the Neccesary Details for Your Journey."}}/>
+        <Text variant="p" className={`mt-5 font-medium capitalize`}>
+            Select your transaction type
         </Text>
-        <div className="flex gap-12 mt-10">
+        <div className="flex gap-12 mt-5 select-none">
         {passengerTypes.map((passenger, index) => (
             <div key={index} 
-            className={`${isActive(stateShipType, passenger.label)} border-gray-400 hover:border-sky-500 hover:ring-2 hover:ring-sky-500 w-52 py-5 rounded-xl flex items-center flex-col justify-center cursor-pointer`}
+            className={`${isActive(stateShipType, passenger.label)} border w-52 py-5 rounded-sm grow flex items-center flex-col justify-center cursor-pointer`}
             onClick={() => {stateShipType === passenger.label ? setStateShipType(null) : setStateShipType(passenger.label)}}>
-                <img src={passenger.icon} alt="icon" className="w-24" />
-                <Text variant="infoSmall">{passenger.label}</Text>
+                {/* <img src={passenger.icon} alt="icon" className="w-24" /> */}
+                <Text>{passenger.label}</Text>
             </div>
         ))}
         </div>
