@@ -1,78 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Text } from "../components";
 import isActive from "../../hooks/isActive";
-import axios from "axios";
 import { BarLoader } from "react-spinners";
-import { VesselRouteContext } from "../../pages/Home";
+import { StepForm as StepFormProvider } from "../../pages/Home";
 import { FaExclamationCircle } from "react-icons/fa";
-import Select from "react-select";
+import { getData as GET_ROUTES } from "../../api/routes";
+
 const VesselRoutesContainer = ({}) => {
-  const { stateOrigin, stateDestination, type, route } =
-    React.useContext(VesselRouteContext);
+  const { type, route } = React.useContext(StepFormProvider);
+
   const [loading, setLoading] = useState();
   const [data, setData] = useState([]);
   const [stateType, setStateType] = type;
   const [stateRoute, setStateRoute] = route;
-  const [origin, setOrigin] = stateOrigin;
-  const [destination, setDestination] = stateDestination;
 
+  const param = { transportation_type: type }
   useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
-      try {
-        await axios
-          .get(
-            `${process.env.API_URL}/api/routes`,
-            { params: { transportation_type: type } },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-              },
-            }
-          )
-          .then((response) => {
-            setData(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+    const fetchRoutes = async () => {
+      if (stateType) {
+        setLoading(true);
+        await GET_ROUTES(`${process.env.API_URL}/routes`, setData, setLoading, param);
       }
     };
-    fetchData();
+    fetchRoutes();
   }, [stateType]);
-
-  const routeSetter = (route) => {
-    if(stateRoute === route.id){
-      setStateRoute(null);
-      setOrigin(null);
-      setDestination(null);
-    }else{
-      setStateRoute(route.id);
-      setOrigin(`${route.origin}`);
-      setDestination(`${route.destination}`);
-    }
-
-  };
   return (
     <>
-      <div className={`w-full mt-5 flex flex-col ${stateType ==  undefined ? 'h-48' : 'h-[16.3rem]  transition-height duration-500' } `}>
+      <div className={`w-full mt-5 flex flex-col ${stateType ==  undefined ? 'h-48' : 'h-[16.3rem]' }   transition-height duration-500 `}>
         <div>
           <Text variant="p">Select Transit Type</Text>
           <div className="flex gap-5 mt-5 ">
             <Text
-              onClick={()=>{stateType === 'In' ? setStateType(null) : setStateType('In'); }}
-              // onClick={() => { setStateType("in");  }}
+              onClick={()=>{stateType === 'In' ? setStateType(undefined) : setStateType('In'); setStateRoute(null) }}
               variant="buttonText"
               className={`${isActive(stateType, "In")} w-full text-center text-sm`}>
               {" "} In {" "}
             </Text>
             <Text
-              onClick={()=>{stateType === 'Out' ? setStateType(null) : setStateType('Out'); }}
-              // onClick={() => { setStateType("out"); }}
+              onClick={()=>{stateType === 'Out' ? setStateType(undefined) : setStateType('Out'); setStateRoute(null)}}
               variant="buttonText"
               className={`${isActive(stateType, "Out")} w-full text-center text-sm`}>
               {" "} Out {" "}
@@ -88,22 +53,21 @@ const VesselRoutesContainer = ({}) => {
           {loading ? (
             <BarLoader color="#0284C7" />
           ) : (
-            <div className="grid grid-cols-3 gap-4 animate-appear ">
+            <div className={`grid-cols-3 gap-4 animate-show opacity-0 ${stateType ==  undefined ? 'hidden' : 'grid' } `}>
               {data.map((route, index) => (
                 <Container
-                  onClick={() => { routeSetter(route) }}
-
+                  onClick={() => { stateRoute === route ? setStateRoute(null) : setStateRoute(route);   }}
                   key={index}
                   variant="yCenter"
-                  className={`${isActive(stateRoute, route.id)} text-sm mt-5 w-full gap-3 cursor-pointer justify-center rounded-sm py-3`}>
+                  className={`${isActive(stateRoute && stateRoute.id, route.id)} text-sm mt-5 w-full gap-3 cursor-pointer justify-center rounded-sm py-3`}>
                   <Text
                     className={`capitalize text-center`}
-                    variant={ route.transportation_type == "out" ? "danger" : "success" }>
+                    variant={ route.attributes.transportationType == "out" ? "danger" : "success" }>
                     {" "}
-                    {route.transportation_type}
+                    {route.attributes.transportationType}
                     {" "}
                   </Text>
-                  <Text> {route.origin} - {route.destination} </Text>
+                  <Text> {route.attributes.routes.origin} - {route.attributes.routes.destination} </Text>
                 </Container>
               ))}
             </div>

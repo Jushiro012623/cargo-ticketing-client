@@ -20,6 +20,7 @@ export default {
       animation: {
         show: "show .2s linear forwards",
         appear: "appear .2s linear forwards",
+        longerAppear: "show .2s linear .3s forwards",
       },
       transitionProperty: {
         height: "height",

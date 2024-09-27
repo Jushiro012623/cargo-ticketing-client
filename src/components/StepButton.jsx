@@ -1,9 +1,9 @@
 import React from 'react'
-import { VesselRouteContext } from '../pages/Home';
+import { StepForm } from '../pages/Home';
 import Button from './Button';
 import { FaArrowRight } from "react-icons/fa";
 const StepButton = ({ steps, vessel, route, type }) => {
-    const { stateCurrentStep, stateCompleteStep } = React.useContext(VesselRouteContext);
+    const { stateCurrentStep, stateCompleteStep } = React.useContext(StepForm);
 
     const [currentStep, setCurrentStep] = stateCurrentStep;
     const [completeStep, setCompleteStep] = stateCompleteStep;
@@ -17,7 +17,7 @@ const StepButton = ({ steps, vessel, route, type }) => {
         : setCurrentStep((prev) => prev + 1);
     };
     return (
-      <div className="mt-5 pt-5 border-t flex justify-between">
+      <div className="mt-5 pt-5 border-t flex justify-between z-20">
         {currentStep > 1 && !completeStep ? (
           <Button
             className={`min-w-20 text-sm px-5 py-3`}
